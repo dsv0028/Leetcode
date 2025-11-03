@@ -14,3 +14,35 @@ public:
         return ans;
     }
 };
+
+/*
+🔹 Problem: Minimum Time to Make Rope Colorful
+🔹 Link: https://leetcode.com/problems/minimum-time-to-make-rope-colorful/
+🔹 Level: Medium
+
+🧠 Approach:
+We must remove balloons so that no two adjacent have the same color.
+To minimize total time, always remove the balloon with smaller `neededTime`
+whenever two adjacent colors match.
+
+Steps:
+1️⃣ Traverse through the string.
+2️⃣ If colors[i] == colors[i+1]:
+    - Add min(neededTime[i], neededTime[i+1]) to total cost.
+    - Keep the balloon with larger time for future comparison.
+3️⃣ Return the total minimum time.
+
+🧩 Example:
+Input:
+  colors = "abaac"
+  neededTime = [1, 2, 3, 4, 5]
+Output:
+  3
+
+🔹 Explanation:
+We remove the 3-cost balloon (3rd index) since the next one (4) is larger.
+Total = 3
+
+⏱️ Time Complexity: O(n)
+💾 Space Complexity: O(1)
+*/
