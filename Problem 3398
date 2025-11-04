@@ -1,0 +1,64 @@
+class Solution {
+public:
+    vector<int> findXSum(vector<int>& nums, int k, int x) {
+        int n = nums.size();
+        vector<int> result;
+        unordered_map<int, int> mp;
+        int i = 0, j = 0;
+
+        while (j < n) {
+            mp[nums[j]]++;
+
+            if (j - i + 1 == k) {
+                vector<pair<int, int>> elements(mp.begin(), mp.end());
+
+                sort(elements.begin(), elements.end(), [](auto& a, auto& b) {
+                    if (a.second == b.second)
+                        return a.first > b.first;
+                    return a.second > b.second;
+                });
+
+                int Sum = 0;
+                int a = 0;
+
+                for (auto& p : elements) {
+                    Sum += p.first * p.second;
+                    a++;
+                    if (a == x)
+                        break;
+                }
+
+                result.push_back(Sum);
+
+                mp[nums[i]]--;
+                if (mp[nums[i]] == 0) {
+                    mp.erase(nums[i]);
+                }
+
+                i++;
+            }
+            j++;
+        }
+        return result;
+    }
+};
+
+Approach:
+
+Use binary search on the answer m (the max allowed run length).
+
+For each m, check how many flips are needed to ensure no run of identical bits exceeds m.
+
+Count flips by scanning contiguous runs — if a run has length k, it needs k / (m + 1) flips.
+
+If total flips ≤ numOps, m is achievable.
+
+Special case: m = 1 (alternate bits pattern).
+
+Return the smallest valid m.
+
+Complexity:
+
+⏱ Time: O(n log n)
+
+💾 Space: O(1)
