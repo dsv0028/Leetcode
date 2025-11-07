@@ -1,0 +1,63 @@
+Description:
+Find the longest substring where every letter appears in both lowercase and uppercase forms.
+
+Tech Stack:
+C++ (STL – unordered_map, string)
+
+Complexity:
+
+Time: O(N²)
+
+Space: O(1)
+
+Example:
+Input: "YazaAay"
+Output: "aAa"
+
+CODE - 
+
+bool isNice(unordered_map<char, int>& lower, unordered_map<char, int>& upper) {
+    for (auto& p : lower) {
+        char ch = toupper(p.first);
+        if (upper.find(ch) == upper.end())
+            return false;
+    }
+    for (auto& p : upper) {
+        char ch = tolower(p.first);
+        if (lower.find(ch) == lower.end())
+            return false;
+    }
+    return true;
+}
+
+class Solution {
+public:
+    string longestNiceSubstring(string s) {
+        int i = 0;
+        int n = s.size();
+        string ans = "";
+        int max_len = 0;
+
+        while (i < n) {
+            unordered_map<char, int> lower, upper;
+            int j = i;
+
+            while (j < n) {
+                char c = s[j];
+                if (islower(c)) {
+                    lower[c]++;
+                } else {
+                    upper[c]++;
+                }
+
+                if (isNice(lower, upper) && (j - i + 1) > max_len) {
+                    max_len = j - i + 1;
+                    ans = s.substr(i, j - i + 1);
+                }
+                j++;
+            }
+            i++;
+        }
+        return ans;
+    }
+};
