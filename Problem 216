@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void solve(vector<int>& ip, vector<int> op, int i, int t, int k, set<vector<int>>& st) {
+        if (t < 0) return;
+        if (t == 0 && op.size() == k) {
+            st.insert(op);
+            return;
+        }
+        if (i == ip.size()) return;
+
+        op.push_back(ip[i]);
+        solve(ip, op, i + 1, t - ip[i], k, st);
+        op.pop_back();
+
+        solve(ip, op, i + 1, t, k, st);
+    }
+
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> ip;
+        for (int i = 1; i <= 9; i++) {
+            ip.push_back(i);
+        }
+        set<vector<int>> st;
+        vector<int> op;
+        solve(ip, op, 0, n, k, st);
+        return vector<vector<int>>(st.begin(), st.end());
+    }
+};
