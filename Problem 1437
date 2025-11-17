@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool kLengthApart(vector<int>& nums, int k) {
+        int n = nums.size();
+        int i = -1, j = 0;
+        int dis = INT_MAX;
+
+        while (j < n) {
+            if (nums[j] == 1) {
+                if (i != -1) {
+                    dis = min(dis, (j - i));
+                }
+                i = j;
+            }
+            j++;
+        }
+
+        if (dis <= k) {
+            return false;
+        }
+        return true;
+    }
+};
