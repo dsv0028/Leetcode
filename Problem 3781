@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long maximumScore(vector<int>& nums, string s) {
+        int n = nums.size();
+
+      //  auto arr = make_pair(nums, s);
+
+        priority_queue<int> maxheap;
+        long long score = 0;
+        for (int i = 0; i < n; i++) {
+            maxheap.push(nums[i]);
+
+            if (s[i] == '1') {
+                score += maxheap.top();
+                maxheap.pop();
+            }
+        }
+        return score;
+    }
+};
