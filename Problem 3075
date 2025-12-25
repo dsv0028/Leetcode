@@ -1,0 +1,19 @@
+class Solution {
+public:
+    long long maximumHappinessSum(vector<int>& happiness, int k) {
+        priority_queue<int> pq;
+        for (int it : happiness) {
+            pq.push(it);
+        }
+        long long ans = 0;
+        for (int i = 1; i <= k; i++) {
+            int a = pq.top();
+            pq.pop();
+            int b = i - 1;
+            if ((a - b) > 0) {
+                ans += (a - b);
+            }
+        }
+        return ans;
+    }
+};
