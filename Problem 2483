@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int bestClosingTime(string customers) {
+        int s = 0;
+        int n = customers.size();
+        int ans = 0;
+        int ms = 0;
+        for (int i = 0; i < n; i++) {
+            s += (customers[i] == 'Y') ? 1 : -1;
+            if (s > ms) {
+                ms = s;
+                ans = i + 1;
+            }
+        }
+        return ans;
+    }
+};
