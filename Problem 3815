@@ -1,0 +1,42 @@
+class AuctionSystem {
+public:
+    unordered_map<int, unordered_map<int, int>> bids;
+    unordered_map<int, set<pair<int, int>>> item;
+    
+    AuctionSystem() {
+        
+    }
+    
+    void addBid(int userId, int itemId, int bidAmount) {
+        auto a = make_tuple(userId, itemId, bidAmount);
+
+        if(bids[itemId].count(userId)){
+            int oa = bids[itemId][userId];
+            item[itemId].erase({oa, userId});
+        }
+
+        bids[itemId][userId] = bidAmount;
+        item[itemId].insert({bidAmount, userId});
+    }
+    
+    void updateBid(int userId, int itemId, int newAmount) {
+        int oa = bids[itemId][userId];
+        item[itemId].erase({oa, userId});
+        bids[itemId][userId] = newAmount;
+        item[itemId].insert({newAmount, userId});
+    }
+    
+    void removeBid(int userId, int itemId) {
+        int amt = bids[itemId][userId];
+
+        item[itemId].erase({amt, userId});
+        bids[itemId].erase(userId);
+    }
+    
+    int getHighestBidder(int itemId) {
+        if(item[itemId].empty()) return -1;
+
+        auto it = prev(item[itemId].end());
+        return it -> second;
+    }
+};
