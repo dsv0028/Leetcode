@@ -1,0 +1,42 @@
+//Memoization
+
+class Solution {
+public:
+int t[46];
+    int climb(int n){
+    if(n < 0){
+        return 0;
+    }
+    if(n == 1 || n == 0){
+        return 1;
+    }
+    if(t[n] != -1){
+        return t[n];
+    }
+
+    return t[n] = climb(n - 1) + climb(n - 2);
+}
+
+    int climbStairs(int n) {
+        memset(t, -1, sizeof(t));
+       return climb(n);
+    }
+};
+
+
+
+/Tabulation
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        vector<int> t(n+1, -1);
+
+        t[0] = 1;
+        if(n >= 1) t[1] = 1;
+        for(int i = 2; i <= n; i++){
+            t[i] = t[i - 1] + t[i - 2];
+        }
+        return t[n];
+    }
+};
