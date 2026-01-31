@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string reverseByType(string s) {
+        int n = s.size();
+        vector<char> let, sp;
+        for(char it: s){
+            if(it >= 'a' && it <= 'z'){
+                let.push_back(it);
+            }
+            else{
+                sp.push_back(it);
+            }
+        }
+
+        reverse(let.begin(), let.end());
+        reverse(sp.begin(), sp.end());
+
+        int a = 0, b = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] >= 'a' && s[i] <= 'z'){
+                s[i] = let[a];
+                a++;
+            }else{
+                s[i] = sp[b];
+                b++;
+            }
+        }
+        return s;
+    }
+};
