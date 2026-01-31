@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minimumK(vector<int>& nums) {
+        int l = 1;
+        int h = 100000;
+        int ans = h;
+
+        while(l <= h){
+            int a = l + (h- l)/2;
+            long long op = 0;
+
+            for(int it: nums){
+                op += (it + a - 1)/a;
+                if(op > 1LL*a*a){
+                    break;
+                }
+            }
+
+            if(op <= 1LL*a*a){
+                ans = a;
+                h = a - 1;
+            }else{
+                l = a+1;
+            }
+        }
+        return ans;
+    }
+};
