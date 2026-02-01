@@ -1,0 +1,55 @@
+class RideSharingSystem {
+public:
+
+    queue<int> rider;
+    queue<int> driver;
+    unordered_set<int> canceled;
+    unordered_set<int> active;
+    
+    RideSharingSystem() {
+        
+    }
+    
+    void addRider(int riderId) {
+        rider.push(riderId);
+        active.insert(riderId);
+    }
+    
+    void addDriver(int driverId) {
+        driver.push(driverId);
+    }
+    
+    vector<int> matchDriverWithRider() {
+    
+
+        while(!rider.empty() && canceled.count(rider.front())){
+            active.erase(rider.front());
+            canceled.erase(rider.front());
+            rider.pop();
+        }
+        if(driver.empty() || rider.empty()){
+            return {-1, -1};
+        }
+        int did = driver.front();
+        int rid = rider.front();
+        driver.pop();
+        rider.pop();
+        active.erase(rid);
+        return {did, rid};
+    }
+    
+    void cancelRider(int riderId) {
+        if(active.count(riderId)){
+            canceled.insert(riderId);
+        }
+    }
+};
+
+/**
+ * Your RideSharingSystem object will be instantiated and called as such:
+ * RideSharingSystem* obj = new RideSharingSystem();
+ * obj->addRider(riderId);
+ * obj->addDriver(driverId);
+ * vector<int> param_3 = obj->matchDriverWithRider();
+ * obj->cancelRider(riderId);
+ */
