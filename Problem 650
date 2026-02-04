@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int t[1001];
+    int solve(int n, int factor) {
+        if (n == 1) return 0;
+        if(t[factor] != -1){
+            return t[factor];
+        }
+
+        if (n % factor == 0) {
+            return t[factor] =  factor + solve(n / factor, factor);
+        }
+        else {
+            return t[factor] = solve(n, factor + 1);
+        }
+    }
+
+    int minSteps(int n) {
+        memset(t, -1, sizeof(t));
+        return solve(n, 2); 
+    }
+};
