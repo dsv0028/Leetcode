@@ -1,34 +1,53 @@
 class Solution {
 public:
+    unordered_map<string, bool> mp;
+
     bool solve(string a, string b) {
-        if (a.compare(b) == 0)
+
+        if (a == b)
             return true;
 
-        if (a.size() <= 1)
+        if (a.length() <= 1)
             return false;
 
-        int n = a.size();
+        string key = a + "_" + b;
+        if (mp.find(key) != mp.end())
+            return mp[key];
+
+        int freq[26] = {0};
+        for (int i = 0; i < a.length(); i++) {
+            freq[a[i] - 'a']++;
+            freq[b[i] - 'a']--;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0)
+                return mp[key] = false;
+        }
+
+        int n = a.length();
         bool flag = false;
 
         for (int i = 1; i <= n - 1; i++) {
 
-            // swap case
-            bool c1 = solve(a.substr(0, i), b.substr(n - i, i)) &&
-                      solve(a.substr(i, n - i), b.substr(0, n - i));
+            if (solve(a.substr(0, i), b.substr(n - i, i)) &&
+                solve(a.substr(i, n - i), b.substr(0, n - i))) {
+                flag = true;
+                break;
+            }
 
-            // no-swap case
-            bool c2 = solve(a.substr(0, i), b.substr(0, i)) &&
-                      solve(a.substr(i, n - i), b.substr(i, n - i));
-
-            if (c1 || c2) {
+            if (solve(a.substr(0, i), b.substr(0, i)) &&
+                solve(a.substr(i, n - i), b.substr(i, n - i))) {
                 flag = true;
                 break;
             }
         }
-        return flag;
+
+        return mp[key] = flag;
     }
 
     bool isScramble(string s1, string s2) {
+        if (s1.length() != s2.length())
+            return false;
         return solve(s1, s2);
     }
 };
