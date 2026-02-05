@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool solve(string a, string b) {
+        if (a.compare(b) == 0)
+            return true;
+
+        if (a.size() <= 1)
+            return false;
+
+        int n = a.size();
+        bool flag = false;
+
+        for (int i = 1; i <= n - 1; i++) {
+
+            // swap case
+            bool c1 = solve(a.substr(0, i), b.substr(n - i, i)) &&
+                      solve(a.substr(i, n - i), b.substr(0, n - i));
+
+            // no-swap case
+            bool c2 = solve(a.substr(0, i), b.substr(0, i)) &&
+                      solve(a.substr(i, n - i), b.substr(i, n - i));
+
+            if (c1 || c2) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    bool isScramble(string s1, string s2) {
+        return solve(s1, s2);
+    }
+};
