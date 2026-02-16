@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int reverseBits(int n) {
+        string str = bitset<32>(n).to_string();
+        reverse(str.begin(), str.end()); 
+        int val = bitset<32>(str).to_ulong();
+        return val;
+    }
+};
