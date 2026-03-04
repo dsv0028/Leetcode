@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool solve(vector<vector<int>>& mat, int r, int col, int m, int n) {
+        for (int i = 0; i < n; i++) { 
+            if (col != i) {
+                if (mat[r][i] != 0) {
+                    return false;
+                }
+            }
+        }
+
+        for (int j = 0; j < m; j++) { 
+            if (r != j) {
+                if (mat[j][col] != 0) { 
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    int numSpecial(vector<vector<int>>& mat) {
+        int m = mat.size();
+        int n = mat[0].size();
+        int cnt = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 1) {
+                    bool check = solve(mat, i, j, m, n);
+                    if (check) {
+                        cnt++;
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
+};
