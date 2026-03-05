@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int minOperations(string s) {
+        int n = s.size();
+        string zero = "";
+        string one = "";
+        for(int i = 0; i < n/2; i++){
+            zero += "01";
+            one += "10";
+        }
+        if(n%2 == 1){
+            zero += "0";
+            one += "1";
+        }
+        int zc = 0;
+        int oc = 0;
+        for(int i = 0; i < n; i++){
+            if(s[i] != zero[i]){
+                zc++;
+            }
+            if(s[i] != one[i]){
+                oc++;
+            }
+        }
+        return min(oc, zc);
+    }
+};
