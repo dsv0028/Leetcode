@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool judgeCircle(string moves) {
+        int n = moves.size();
+        int lc = 0, rc = 0, uc = 0, dc = 0;
+        for(int i = 0; i < n; i++){
+            if(moves[i] == 'L'){
+                lc++;
+            }
+            else if(moves[i] == 'R'){
+                rc++;
+            }
+            else if(moves[i] == 'U'){
+                uc++;
+            }
+            else{
+                dc++;
+            }
+        }
+        if(lc == rc && uc == dc){
+            return true;
+        }
+        return false;
+    }
+};
