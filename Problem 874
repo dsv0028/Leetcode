@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> dx = {0, 1, 0, -1}, dy = {1, 0, -1, 0};
+
+    int solve(pair<int, int> dir){
+        int ans  = 0;
+        ans = (dir.first * dir.first) + (dir.second * dir.second);
+        return ans;
+    }
+
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        set<pair<int, int>> st;
+        for(auto it: obstacles){
+            st.insert({it[0], it[1]});
+        }
+
+        int n = commands.size();
+        pair<int, int> pos = {0, 0};
+        int dir = 0;
+        int ans = 0;
+
+        for(int i = 0; i < n; i++){
+            if(commands[i] == -1){
+                dir = (dir + 1) % 4;
+            }
+            else if(commands[i] == -2){
+                dir = (dir + 3) % 4;
+            }
+            else{
+                for(int step = 0; step < commands[i]; step++){
+                    int nx = pos.first + dx[dir];
+                    int ny = pos.second + dy[dir];
+
+                    if(st.count({nx, ny})) break;
+
+                    pos = {nx, ny};
+                    ans = max(ans, solve(pos));
+                }
+            }
+        }
+        return ans;
+    }
+};
