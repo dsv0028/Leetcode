@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> solveQueries(vector<int>& nums, vector<int>& queries) {
+        int n = nums.size();
+        int m = queries.size();
+        unordered_map<int, vector<int>> mp;
+        for(int i = 0; i < n; i++){
+            mp[nums[i]].push_back(i);
+        }
+        vector<int> ans;
+
+        for(int i = 0; i < m; i++){
+            int a = queries[i];
+            int b = nums[a];
+
+            vector<int>& v = mp[b];
+            if(v.size() == 1){
+                ans.push_back(-1);
+                continue;
+            }
+            int bb = INT_MAX;
+            // binary search
+            int pos = lower_bound(v.begin(), v.end(), a) - v.begin();
+
+            // next index
+            int next = v[(pos + 1) % v.size()];
+            int diff1 = abs(next - a);
+            bb = min(bb, min(diff1, n - diff1));
+
+            // previous index
+            int prev = v[(pos - 1 + v.size()) % v.size()];
+            int diff2 = abs(prev - a);
+            bb = min(bb, min(diff2, n - diff2));
+            ans.push_back(bb);
+        }
+        return ans;
+    }
+};
