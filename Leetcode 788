@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool check(int n){
+        string s = to_string(n);
+        
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '3' || s[i] == '4' || s[i] == '7'){
+                return false;
+            }
+            else if(s[i] == '2'){
+                s[i] = '5';
+            }
+            else if(s[i] == '5'){
+                s[i] = '2';
+            }
+            else if(s[i] == '6'){
+                s[i] = '9';
+            }
+            else if(s[i] == '9'){
+                s[i] = '6';
+            }
+        }
+
+        int a = stoi(s);  
+        return a != n;
+    }
+
+    int rotatedDigits(int n) {
+        int count = 0;   
+        
+        for(int i = 1; i <= n; i++){
+            if(check(i)){
+                count++;
+            }
+        }
+        return count;
+    }
+};
