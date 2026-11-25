@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int maxLength(vector<int>& nums) {
+        int n = nums.size();
+        int cnt = 0;
+        for(int i = 0; i < n; i++){
+            int p = nums[i];
+            int lcma = nums[i];
+            int gcda = nums[i];
+            for(int j = i+1; j < n; j++){
+                p *= nums[j];
+                lcma = lcm(lcma, nums[j]);
+                gcda = gcd(gcda, nums[j]);
+                if(p > lcma*gcda){
+                    break;
+                }
+                if(p == lcma*gcda){
+                    cnt = max(cnt, j - i + 1);
+                }
+            }
+        }
+        return cnt;
+    }
+};
